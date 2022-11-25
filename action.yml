@@ -1,0 +1,9 @@
+name: 'Invalidate Cloudfront and Wait for Completion Action'
+description: 'Invalidates Cloudfront distributions and waits for completion Action'
+author: 'saurabh-prakash'
+branding:
+  icon: 'cloud-off'
+  color: 'gray-dark'
+runs:
+  using: 'node16'
+  main: 'index.js'

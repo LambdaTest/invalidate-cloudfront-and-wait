@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/index.js",
+            "env": {
+                "DISTRIBUTION_IDS": "<dist_id_1>, <dist_id_2>",
+                "PATHS": "/abc/*,/lmn/*,/xyz/*",
+                "AWS_REGIONS": "us-east-1,us-east-1",
+                "AWS_ACCESS_KEY_IDS": "<access_key_1>,<access_key_2>",
+                "AWS_SECRET_ACCESS_KEYS": "<secret_key_1>,<secret_key_2>",
+                "DELAY": "1500"
+            },
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        }
+    ]
+}
