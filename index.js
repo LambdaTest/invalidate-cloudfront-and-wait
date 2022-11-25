@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const aws = require('aws-sdk');
+const aws = require('@aws-sdk/client-cloudfront');
 const crypto = require('crypto');
 const delay = require('delay');
 
@@ -69,11 +69,13 @@ function validateInputs(rawDistributionIDs, rawPaths, rawAWSRegions, rawAWSAcces
 async function invalidateCloudfront(awsAccessKeyID, awsSecretAccessKey, awsRegion, distributionID, items) {
     const traceID = crypto.randomUUID();
     try {
-        const cf = new aws.CloudFront(new aws.Config({
-            accessKeyId: awsAccessKeyID,
-            secretAccessKey: awsSecretAccessKey,
+        const cf = new aws.CloudFront({
+            credentials: {
+                accessKeyId: awsAccessKeyID,
+                secretAccessKey: awsSecretAccessKey
+            },
             region: awsRegion
-        }));
+        });
         console.log(`[${traceID}] cloudfront__invalidation: ` + distributionID);
         console.log(`[${traceID}] items: ` + items);
         const createInvalidationParams = {
@@ -86,7 +88,7 @@ async function invalidateCloudfront(awsAccessKeyID, awsSecretAccessKey, awsRegio
                 }
             }
         };
-        const invalidationReq = await cf.createInvalidation(createInvalidationParams).promise();
+        const invalidationReq = await cf.createInvalidation(createInvalidationParams);
         if (!!invalidationReq && !!invalidationReq.Invalidation && !!invalidationReq.Invalidation.Id) {
             const invalidationID = invalidationReq.Invalidation.Id;
             const getInvalidationParams = {
@@ -98,7 +100,7 @@ async function invalidateCloudfront(awsAccessKeyID, awsSecretAccessKey, awsRegio
             while (invalidationStatus === "InProgress") {
                 await delay(delayDuration);
                 console.log(`[${traceID}] Fetching CF Invalidation Status!!`)
-                const invalidationResponse = await cf.getInvalidation(getInvalidationParams).promise();
+                const invalidationResponse = await cf.getInvalidation(getInvalidationParams);
                 if (!!invalidationResponse && !!invalidationResponse.Invalidation && !!invalidationResponse.Invalidation.Status) {
                     invalidationStatus = invalidationResponse.Invalidation.Status
                 }
