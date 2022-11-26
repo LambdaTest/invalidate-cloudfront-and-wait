@@ -1,6 +1,6 @@
 # Invalidate Cloudfront and Wait for Completion Action
 
-A GitHub Workflow Action which invalidates Cloudfront distributions paths and wait for the completions AND it triggers the all invalidations in parallel.
+A GitHub Workflow Action which invalidates Cloudfront distributions paths and wait for the completions AND it triggers all invalidations in parallel.
 Set the following env (for multiple, provide them comma-separated):
 1. AWS_REGIONS (*)
 2. AWS_ACCESS_KEY_IDS (*)
