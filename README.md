@@ -26,7 +26,7 @@ jobs:
       uses: actions/checkout@master
 
     - name: Invalidate Cloudfront and Wait for Completion Action
-      uses: muratiger/invalidate-cloudfront-and-wait-for-completion-action@master
+      uses: saurabh-prakash/invalidate-cloudfront-and-wait@v1.0.0
       env:
         AWS_REGIONS: 'us-east-1,us-east-1'
         AWS_ACCESS_KEY_IDS: ${{ secrets.AWS_ACCESS_KEY_ID }},${{ secrets.AWS_ACCESS_KEY_ID }}
