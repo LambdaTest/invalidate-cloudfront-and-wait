@@ -88,7 +88,17 @@ async function invalidateCloudfront(awsAccessKeyID, awsSecretAccessKey, awsRegio
                 }
             }
         };
-        const invalidationReq = await cf.createInvalidation(createInvalidationParams);
+        let invalidationReq = null;
+        let maxRetries = 5;
+        while (maxRetries--) {
+            try {
+                invalidationReq = await cf.createInvalidation(createInvalidationParams);
+            } catch (err) {
+                console.warn(`[${traceID}] Error occurred while creating invalidation request: ${err}\n.Retrying...`);
+                await delay(1000);
+            }
+        }
+        
         if (!!invalidationReq && !!invalidationReq.Invalidation && !!invalidationReq.Invalidation.Id) {
             const invalidationID = invalidationReq.Invalidation.Id;
             const getInvalidationParams = {
