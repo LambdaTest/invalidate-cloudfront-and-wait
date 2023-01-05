@@ -12,7 +12,7 @@ Set the following env (for multiple, provide them comma-separated):
 
 ## Usage
 
-The sample workflow.
+Sample workflow.
 
 ```yaml
 name: Invalidate Cloudfront and Wait for Completion Action
@@ -37,6 +37,7 @@ jobs:
 ```
 
 ### AWS IAM Policy
+Ensure that the AWS AccessKey and SecretKey being supplied has the following IAM Roles attached to it.
 
 ```json
 {
